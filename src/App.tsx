@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import BaseLayout from "./layouts/BaseLayout";
 import RootLayout from "./layouts/RootLayout";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -46,7 +45,7 @@ function App() {
             index
             element={
               <PrivateRoute>
-                <Home />
+                <Dashboard />
               </PrivateRoute>
             }
           />
