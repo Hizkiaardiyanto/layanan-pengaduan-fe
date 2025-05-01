@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const [data, setData] = useState<any>(null);
+  const [, setData] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = () => {

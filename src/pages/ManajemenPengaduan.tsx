@@ -10,7 +10,6 @@ interface Pengaduan {
   tanggalPengaduan: string;
 }
 
-const statusOptions = ["Menunggu", "Diproses", "Selesai"];
 
 const ManajemenPengaduan: React.FC = () => {
   const [pengaduanList, setPengaduanList] = useState<Pengaduan[]>([]);
@@ -45,29 +44,6 @@ const ManajemenPengaduan: React.FC = () => {
     fetchData();
   }, []);
 
-  const updateStatus = async (id: number, status: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      alert("Anda harus login terlebih dahulu!");
-      return;
-    }
-
-    try {
-      await axios.patch(
-        `http://localhost:3000/api/manajemen-pengaduan/${id}/status`,
-        { status },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          withCredentials: true
-        }
-      );
-      fetchData(); // Refresh data setelah status diubah
-    } catch (err) {
-      console.error("Gagal mengubah status", err);
-    }
-  };
 
   const deletePengaduan = async (id: number) => {
     const token = localStorage.getItem("token");
