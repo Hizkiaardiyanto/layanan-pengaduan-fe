@@ -16,8 +16,9 @@ const ManajemenPengaduan: React.FC = () => {
   const [pengaduanList, setPengaduanList] = useState<Pengaduan[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem("token");
+
   const fetchData = async () => {
-    const token = localStorage.getItem("token");
     if (!token) {
       alert("Anda harus login terlebih dahulu!");
       return;
@@ -28,9 +29,9 @@ const ManajemenPengaduan: React.FC = () => {
         "https://layanan-pengaduan-be.vercel.app/api/manajemen-pengaduan",
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
-          withCredentials: true
+          withCredentials: true,
         }
       );
       setPengaduanList(res.data);
@@ -41,13 +42,7 @@ const ManajemenPengaduan: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-
   const deletePengaduan = async (id: number) => {
-    const token = localStorage.getItem("token");
     if (!token) {
       alert("Anda harus login terlebih dahulu!");
       return;
@@ -59,24 +54,50 @@ const ManajemenPengaduan: React.FC = () => {
           `https://layanan-pengaduan-be.vercel.app/api/manajemen-pengaduan/${id}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`
+              Authorization: `Bearer ${token}`,
             },
-            withCredentials: true
+            withCredentials: true,
           }
         );
-        setPengaduanList((prev) => prev.filter((p) => p.id !== id)); // Menghapus dari state lokal
+        setPengaduanList((prev) => prev.filter((p) => p.id !== id));
       } catch (err) {
         console.error("Gagal menghapus pengaduan", err);
       }
     }
   };
 
+  const updateStatus = async (id: number, status: string) => {
+    if (!token) return alert("Anda harus login terlebih dahulu!");
+
+    try {
+      await axios.patch(
+        `https://layanan-pengaduan-be.vercel.app/api/manajemen-pengaduan/${id}`,
+        { status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      fetchData(); // refresh data
+    } catch (err) {
+      console.error("Gagal mengubah status", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   if (loading) return <p>Memuat data...</p>;
 
   return (
-<div className="flex items-center justify-center min-h-[calc(100vh-64px)] bg-gray-50 px-4">
+    <div className="flex items-center justify-center min-h-[calc(100vh-64px)] bg-gray-50 px-4">
       <div className="w-full max-w-6xl bg-white p-6 rounded-xl shadow-md border border-gray-200">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Manajemen Pengaduan</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Manajemen Pengaduan
+        </h1>
 
         {pengaduanList.length === 0 ? (
           <p className="text-center text-gray-500">Tidak ada pengaduan.</p>
@@ -115,10 +136,24 @@ const ManajemenPengaduan: React.FC = () => {
                     <td className="p-3 border">
                       {new Date(item.tanggalPengaduan).toLocaleDateString()}
                     </td>
-                    <td className="p-3 border text-center">
+                    <td className="p-3 border text-center space-x-1">
+                      {/* Tombol Status */}
+                      {statusOptions.map(
+                        (status) =>
+                          status !== item.status && (
+                            <button
+                              key={status}
+                              onClick={() => updateStatus(item.id, status)}
+                              className="text-xs text-blue-600 hover:text-blue-800 hover:underline mr-1"
+                            >
+                              {status}
+                            </button>
+                          )
+                      )}
+                      {/* Tombol Hapus */}
                       <button
                         onClick={() => deletePengaduan(item.id)}
-                        className="text-sm text-red-600 hover:text-red-800 hover:underline"
+                        className="text-xs text-red-600 hover:text-red-800 hover:underline"
                       >
                         Hapus
                       </button>
