@@ -21,7 +21,7 @@ const ProfileUser: React.FC = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/api/user', {
+        const response = await axios.get('https://layanan-pengaduan-be.vercel.app/api/user', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
