@@ -73,14 +73,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
         </Route>
       </Route>
     )

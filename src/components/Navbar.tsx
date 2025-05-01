@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
-  HomeIcon,
+  
   UserIcon,
   DocumentTextIcon,
   ClipboardDocumentListIcon,
@@ -11,7 +11,7 @@ import { useAuth } from "../utils/AuthProvider";
 import axios from "axios";
 
 const navigation = [
-  { name: "Dashboard", to: "/dashboard", icon: HomeIcon },
+  
   { name: "Profile", to: "/profile", icon: UserIcon },
   { name: "Kirim Pengaduan", to: "/pengaduan", icon: DocumentTextIcon },
   {
