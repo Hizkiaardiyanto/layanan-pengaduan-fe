@@ -9,11 +9,14 @@ import BaseLayout from "./layouts/BaseLayout";
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Post from "./pages/Post";
 import Register from "./pages/Register";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 import { AuthProvider } from "./utils/AuthProvider";
+import PengaduanForm from "./pages/PengaduanForm";
+import ManajemenPengaduan from "./pages/ManajemenPengaduan";
+import ProfileUser from "./pages/ProfileUser";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 function App() {
@@ -48,10 +51,34 @@ function App() {
             }
           />
           <Route
-            path="posts"
+            path="profile"
             element={
               <PrivateRoute>
-                <Post />
+                <ProfileUser />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="pengaduan"
+            element={
+              <PrivateRoute>
+                <PengaduanForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="manajemen"
+            element={
+              <PrivateRoute>
+                <ManajemenPengaduan />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
               </PrivateRoute>
             }
           />
@@ -61,11 +88,11 @@ function App() {
   );
   return (
     <>
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </AuthProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </AuthProvider>
     </>
   );
 }
