@@ -10,6 +10,7 @@ interface Pengaduan {
   tanggalPengaduan: string;
 }
 
+const statusOptions = ["Menunggu", "Diproses", "Selesai"];
 
 const ManajemenPengaduan: React.FC = () => {
   const [pengaduanList, setPengaduanList] = useState<Pengaduan[]>([]);
