@@ -24,7 +24,7 @@ const ManajemenPengaduan: React.FC = () => {
 
     try {
       const res = await axios.get(
-        "http://localhost:3000/api/manajemen-pengaduan",
+        "https://layanan-pengaduan-fe.vercel.app/api/manajemen-pengaduan",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -55,7 +55,7 @@ const ManajemenPengaduan: React.FC = () => {
     if (window.confirm("Yakin ingin menghapus pengaduan ini?")) {
       try {
         await axios.delete(
-          `http://localhost:3000/api/manajemen-pengaduan/${id}`,
+          `https://layanan-pengaduan-fe.vercel.app/api/manajemen-pengaduan/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
